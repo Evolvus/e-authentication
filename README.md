@@ -25,8 +25,8 @@ Content-Type:'application/json'<br/>
 Request Body:<br/>
 <code>
 {<br/>
-	"userName":"name",<br/>
-	"applicationCode":"code"<br/>
+	"id":"userid",<br/>
+	"token":"<Your Token>"<br/>
 }<br/>
  </code>
 
