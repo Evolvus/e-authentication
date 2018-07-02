@@ -14,12 +14,7 @@ module.exports = (router) => {
                 let body = _.pick(req.body, credentials);
                 console.log('Login user', body.userName);
                 user.authenticate(body).then((user) => {
-                    const res = {
-                        status: '200',
-                        data: user,
-                        description: `${body.userName} authenticated successfully.`
-                    }
-                    res.send(res);
+                    res.status(200).send(user);
                 }).catch((e) => {
                     console.log('error', e);
                     const error = {
@@ -46,12 +41,7 @@ module.exports = (router) => {
                 let body = _.pick(req.body, ["token", "id"]);
                 console.log('Updating toke for the user', body.id);
                 user.updateToken(body.id, body.token).then((user) => {
-                    const res = {
-                        status: '200',
-                        data: user,
-                        description: `${user.userName} token updated successfully.`
-                    }
-                    res.send(res);
+                    res.status(200).send(user);
                 }).catch((e) => {
                     const error = {
                         status: '404',
@@ -71,4 +61,4 @@ module.exports = (router) => {
 
             }
         });
-};
+}
