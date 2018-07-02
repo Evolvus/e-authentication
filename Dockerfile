@@ -1,27 +1,17 @@
 FROM node:8.9 as node
 
-WORKDIR /usr/ng-sandstorm/
+
 RUN npm install pm2 -g
-RUN git clone https://github.com/Evolvus/evolvus-sandstorm-ng-ui.git
-
-WORKDIR /usr/ng-sandstorm/evolvus-sandstorm-ng-ui/
-RUN npm install -g @angular/cli typescript uws
-RUN npm  i --save
-RUN ng build --prod --build-optimizer
-RUN ls -a
-
-
-WORKDIR /usr/ng-sandstorm/
-COPY package*.json ./
-COPY .npmrc ./
+COPY . /usr/app-auth/
+COPY package.json /usr/app-auth
+#COPY .npmrc ./
+WORKDIR /usr/app-auth/
 RUN npm install --only=production
 
-COPY . .
 
-RUN cp -r /usr/ng-sandstorm/evolvus-sandstorm-ng-ui/dist/ui-console/*.* /usr/ng-sandstorm/public
 
 #default environment variables
 ENV NODE_ENV production
-ENV PORT 8086
-EXPOSE 8086
+ENV PORT 8087
+EXPOSE 8087
 CMD ["pm2-runtime", "npm", "--", "start"]
