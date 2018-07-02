@@ -53,7 +53,7 @@ app.use("/api", router);
 
 const server = app.listen(PORT, () => {
     debug("server started: ", PORT);
-    console.log("server started: ", PORT);
+    console.log("Authentication server started: ", PORT);
     app.emit('application_started');
 });
 
