@@ -14,6 +14,7 @@ module.exports = (router) => {
                 let body = _.pick(req.body, credentials);
                 console.log('Login user', body.userName);
                 user.authenticate(body).then((user) => {
+                    console.log(user._id);
                     res.status(200).send(user);
                 }).catch((e) => {
                     console.log('error', e);
@@ -41,8 +42,10 @@ module.exports = (router) => {
                 let body = _.pick(req.body, ["token", "id"]);
                 console.log('Updating toke for the user', body.id);
                 user.updateToken(body.id, body.token).then((user) => {
+                    console.log('Updating user token')
                     res.status(200).send(user);
                 }).catch((e) => {
+                    console.log('Updating user token failed',e);
                     const error = {
                         status: '404',
                         data: e,
@@ -52,6 +55,7 @@ module.exports = (router) => {
 
                 });
             } catch (e) {
+                console.log('Updating user token failed ..',e);
                 const error = {
                     status: '404',
                     data: e,
