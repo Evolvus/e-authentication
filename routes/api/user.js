@@ -10,14 +10,14 @@ module.exports = (router) => {
   router.route("/user/authenticate")
     .post((req, res, next) => {
       try {
-        console.log('Received', credentials);
+        debug('Received', credentials);
         let body = _.pick(req.body, credentials);
-        console.log('Login user', body.userName);
+        debug('Login user', body.userName);
         user.authenticate(body).then((user) => {
-          console.log(user._id);
+          debug(user._id);
           res.status(200).send(user);
         }).catch((e) => {
-          console.log('error', e);
+          debug('error', e);
           const error = {
             status: '404',
             data: e,
@@ -26,7 +26,7 @@ module.exports = (router) => {
           res.status(404).send(error);
         });
       } catch (e) {
-        console.log('error e:', e);
+      debug('error e:', e);
         const error = {
           status: '404',
           data: e,
@@ -40,12 +40,12 @@ module.exports = (router) => {
     .post((req, res, next) => {
       try {
         let body = _.pick(req.body, ["token", "id"]);
-        console.log('Updating toke for the user', body.id);
+        debug('Updating toke for the user', body.id);
         user.updateToken(body.id, body.token).then((user) => {
-          console.log('Updating user token')
+          debug('Updating user token')
           res.status(200).send(user);
         }).catch((e) => {
-          console.log('Updating user token failed', e);
+          debug('Updating user token failed', e);
           const error = {
             status: '404',
             data: e,
@@ -55,7 +55,7 @@ module.exports = (router) => {
 
         });
       } catch (e) {
-        console.log('Updating user token failed ..', e);
+        debug('Updating user token failed ..', e);
         const error = {
           status: '404',
           data: e,

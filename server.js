@@ -3,27 +3,21 @@
 //  defaults to 8086
 
 const PORT = process.env.PORT || 8087;
-var dbUrl = process.env.MONGO_DB_URL || "mongodb://10.10.69.204:27017/Platform_Dev";
-
 /*
  ** Get all the required libraries
  */
-const debug = require("debug")("evolvus-platform-server:server");
+const debug = require("debug")("evolvus-e-authentication:server");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
+const connection=require("@evolvus/evolvus-mongo-dao").connection;
 
 const app = express();
 const router = express.Router();
 
-mongoose.connect(dbUrl, (err, db) => {
-  if (err) {
-    debug("Failed to connect to the database");
-  } else {
-    debug("connected to mongodb");
-  }
-});
+
+var dbConnection=connection.connect("e-authentication");
 
 app.use(function(req, res, next) {
   //res.header("Access-Control-Allow-Origin", "*");
