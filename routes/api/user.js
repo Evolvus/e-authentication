@@ -14,7 +14,7 @@ module.exports = (router) => {
         let body = _.pick(req.body, credentials);
         debug('Login user', body.userName);
         user.authenticate(body).then((user) => {
-          debug(user._id);
+          debug('User LoggedIn',user._id);
           res.status(200).send(user);
         }).catch((e) => {
           debug('error', e);
