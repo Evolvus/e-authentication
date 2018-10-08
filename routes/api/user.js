@@ -3,6 +3,8 @@ var ldapconfig = require('./ldapconfig.js');
 const debug = require("debug")("evolvus-platform-server:routes:api:user");
 const _ = require("lodash");
 const user = require("@evolvus/evolvus-user");
+console.log(user);
+
 const application = require("@evolvus/evolvus-application");
 
 const headerAttributes = ["tenantid", "entityid", "accessLevel"];
@@ -19,8 +21,7 @@ var ad = new ActiveDirectory(config);
 module.exports = (router) => {
   router.route("/user/authenticate")
     .post((req, res, next) => {
-      console.log("api");
-      
+      debug("input userId:",req.body.username);
       const response = {
         "status": "200",
         "description": "",
@@ -28,28 +29,26 @@ module.exports = (router) => {
       };
       try {
         let object = _.pick(req.body, ["username", "password"]);
-        console.log(object);
         
         user.findUserName(object.username)
         .then((result)=> {
-          console.log(result);
+          debug("Found user"+result);
           if(result) {
             let username=`${object.username}${config.domain}`;
-            console.log(username);
-            
             ad.authenticate(username, object.password, function (err, auth) {
               if (err) {
+                debug(err);
                 console.log('ERROR: ' + JSON.stringify(err));
                 response.status = "401";
                 response.description = `${err}`;
                 res.status(401).send(response);
               } else if (auth ) {
-                console.log('Both Console and Active Directory Authenticated!');
+                debug('Both Console and Active Directory Authenticated!');
                 response.description = `Both Console and Active Directory Authenticated!`;
                 response.data = auth;
                 res.status(200).send(response);
               } else {
-                console.log('Active Directory Authentication failed!');
+                debug('Active Directory Authentication failed!');
                 response.status = "401";
                 response.description = `Authentication failed!`;
                 response.data = auth;
@@ -57,20 +56,22 @@ module.exports = (router) => {
               }
             });
           } else {
-            console.log('Console Authentication failed!');
+            debug('Console Authentication failed!');
             response.status = "401";
             response.description = `Console Authentication failed!`;
             response.data = "";
             res.status(401).send(response);
           }
         }).catch((e)=> {
-            console.log('Console Authentication failed!');
+          debug(e);
+            debug('Console Authentication failed!');
             response.status = "401";
             response.description = `Console Authentication failed!`;
             response.data = e;
             res.status(401).send(response);
         });
       } catch (e) {
+        debug(e);
         response.status = 401;
         response.description = `Authentication failed!`;
         response.data = e;
