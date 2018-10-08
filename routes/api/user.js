@@ -26,8 +26,8 @@ module.exports = (router) => {
         "data": {}
       };
       try {
-        let object = _.pick(req.body, ["username", "password"]);
-        user.findUserName(object.username)
+        let object = _.pick(req.body, ["username", "password","applicationCode"]);
+        user.findUserName(object.username,object.applicationCode)
           .then((result) => {
             if (result) {
               let username = `${object.username}${config.domain}`;              
