@@ -31,11 +31,13 @@ module.exports = (router) => {
           .then((result) => {
             if (result) {
               let username = `${object.username}${config.domain}`;
+              console.log(username);
+              
               ad.authenticate(username, object.password, function (err, auth) {
                 if (err) {
                   debug('ERROR: ' + JSON.stringify(err));
                   response.status = "401";
-                  response.description = `${err}`;
+                  response.description = `Active Directory Authentication failed!`;
                   res.status(401).send(response);
                 } else if (auth) {
                   debug('Both Console and Active Directory Authenticated!');
