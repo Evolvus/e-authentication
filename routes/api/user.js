@@ -19,19 +19,19 @@ var ad = new ActiveDirectory(config);
 module.exports = (router) => {
   router.route("/user/authenticate")
     .post((req, res, next) => {
-      debug("input userId:", req.body.username);
+      debug("input userId:", req.body.userName);
       const response = {
         "status": "200",
         "description": "",
         "data": {}
       };
       try {
-        let object = _.pick(req.body, ["username", "password","applicationCode"]);
-        user.findUserName(object.username,object.applicationCode)
+        let object = _.pick(req.body, credentials);
+        user.findUserName(object.userName, object.applicationCode)
           .then((result) => {
             if (result) {
-              let username = `${object.username}${config.domain}`;              
-              ad.authenticate(username, object.password, function (err, auth) {
+              let username = `${object.userName}${config.domain}`;
+              ad.authenticate(username, object.userPassword, function(err, auth) {
                 if (err) {
                   debug('ERROR: ' + JSON.stringify(err));
                   response.status = "401";
@@ -41,7 +41,7 @@ module.exports = (router) => {
                   debug('Both Console and Active Directory Authenticated!');
                   response.description = `Both Console and Active Directory Authenticated!`;
                   response.data = auth;
-                  res.status(200).send(response);
+                  res.status(200).send(result);
                 } else {
                   debug('Active Directory Authentication failed!');
                   response.status = "401";
