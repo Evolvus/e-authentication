@@ -10,12 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@evolvus/evolvus-application": "^1.0.4",
-    "@evolvus/evolvus-entity": "^1.0.3",
-    "@evolvus/evolvus-menu": "^1.0.3",
     "@evolvus/evolvus-mongo-dao": "^1.0.1",
-    "@evolvus/evolvus-role": "^1.0.5",
-    "@evolvus/evolvus-user": "^1.1.15",
+    "@evolvus/evolvus-user": "^1.1.19",
     "activedirectory": "^0.7.2",
     "body-parser": "^1.18.2",
     "debug": "^3.1.0",
