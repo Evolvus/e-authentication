@@ -3,7 +3,6 @@ var ldapconfig = require('./ldapconfig.js');
 const debug = require("debug")("evolvus-e-authentication:routes:api:user");
 const _ = require("lodash");
 const user = require("@evolvus/evolvus-user");
-const application = require("@evolvus/evolvus-application");
 var applicationCode = process.env.APPLICATION_CODE || "SANDSTORM";
 
 const headerAttributes = ["tenantid", "entityid", "accessLevel"];
@@ -13,7 +12,6 @@ var config = {
   url: ldapconfig.url,
   baseDN: ldapconfig.baseDN,
   domain: ldapconfig.domain
-
 };
 var ad = new ActiveDirectory(config);
 
