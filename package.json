@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@evolvus/evolvus-mongo-dao": "^1.0.1",
-    "@evolvus/evolvus-user": "^1.1.20",
+    "@evolvus/evolvus-user": "^1.1.22",
     "activedirectory": "^0.7.2",
     "body-parser": "^1.18.2",
     "debug": "^3.1.0",
