@@ -26,7 +26,7 @@ module.exports = (router) => {
       };
       try {
         let object = _.pick(req.body, credentials);
-        console.log("Application Code:",object.applicationCode);
+        debug("Application Code:",object.applicationCode);
         if (object.applicationCode === applicationCode) {
           user.findUserName(object.userName, object.applicationCode)
             .then((result) => {
@@ -65,7 +65,21 @@ module.exports = (router) => {
               response.data = e;
               res.status(401).send(response);
             });
-        } else {
+          }else if(object.applicationCode ==="FLUX_CDA"){
+             user.findUserName(object.userName, object.applicationCode)
+              .then((result) => {
+                  debug('Indus Collect Authenticated!');
+                  response.description = `Indus Collect Authenticated!`;
+                  response.data = auth;
+                  res.status(200).send(result);
+           }).catch((e) => {
+            debug('Indus Collect Authentication failed!', e);
+            response.status = "401";
+            response.description = `Indus Collect Authentication failed!`;
+            response.data = e;
+            res.status(401).send(response);
+          });
+        }else {
           debug('Received', credentials);
           let body = _.pick(req.body, credentials);
           debug('Login user', body.userName);
