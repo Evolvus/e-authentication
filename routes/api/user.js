@@ -32,6 +32,7 @@ module.exports = (router) => {
             .then((result) => {
               if (result) {
                 let username = `${object.userName}${config.domain}`;
+                debug("UserName :",userName);
                 ad.authenticate(username, object.userPassword, function (err, auth) {
                   if (err) {
                     debug('ERROR: ' + JSON.stringify(err));
